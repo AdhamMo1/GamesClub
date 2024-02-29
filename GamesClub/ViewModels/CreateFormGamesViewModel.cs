@@ -1,4 +1,6 @@
-﻿namespace GamesClub.ViewModels
+﻿
+
+namespace GamesClub.ViewModels
 {
     public class CreateFormGamesViewModel
     {
@@ -6,6 +8,7 @@
         public string Name { get; set; } = string.Empty;
         [MaxLength(2500)]
         public string Description { get; set; } = string.Empty;
+        [AllowedExtenstion(FileSettings.allowedExtestion),AllowedSize(FileSettings.MaxSizeAllowed)]
         public IFormFile Cover { get; set; } = default!;
         [Display(Name = "Category")]
         public int CategoryId { get; set; }

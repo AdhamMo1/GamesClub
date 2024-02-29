@@ -1,3 +1,4 @@
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,6 +9,9 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddScoped<ICategoriesService,CategoriesService>();
+builder.Services.AddScoped<IDevicesServices,DevicesServices>();
+builder.Services.AddScoped<IGamesServices,GamesServices>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

@@ -1,4 +1,6 @@
-﻿namespace GamesClub.Data
+﻿using System.Data.SqlTypes;
+
+namespace GamesClub.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
@@ -12,6 +14,7 @@
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            
             builder.Entity<Category>().HasData(new Category[]
             {
                 new Category{Id=1,Name="Sports"},

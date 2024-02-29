@@ -2,26 +2,30 @@
 {
     public class GamesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICategoriesService _categoriesService;
+        private readonly IDevicesServices _devicesServices;
+        private readonly IGamesServices _gamesServices;
 
-        public GamesController(ApplicationDbContext context)
+        public GamesController(ICategoriesService categoriesService, IDevicesServices devicesServices, IGamesServices gamesServices)
         {
-            _context = context;
+            _categoriesService = categoriesService;
+            _devicesServices = devicesServices;
+            _gamesServices = gamesServices;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var games = await _gamesServices.GetAllGames();
+            return View(games);
         }
+       
         [HttpGet]
         public IActionResult Create()
         {
             CreateFormGamesViewModel model = new CreateFormGamesViewModel()
             {
-                Categories = _context.Categories.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }).
-                OrderBy(c => c.Text).ToList(),
-                Deviecs = _context.Devices.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }).
-                OrderBy(c => c.Text).ToList()
+                Categories = _categoriesService.GetCategoriesSelectList(),
+                Deviecs = _devicesServices.GetDevicesSelectList()
             };
             
             return View(model);
@@ -32,12 +36,11 @@
         {
             if (!ModelState.IsValid)
             {
-                model.Categories = _context.Categories.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }).
-                OrderBy(c => c.Text).ToList();
-                model.Deviecs = _context.Devices.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }).
-                OrderBy(c => c.Text).ToList();
+                model.Categories = _categoriesService.GetCategoriesSelectList();
+                model.Deviecs = _devicesServices.GetDevicesSelectList();
                 return View(model);
             }
+            _gamesServices.Create(model);
             return RedirectToAction(nameof(Index));
         }
     }

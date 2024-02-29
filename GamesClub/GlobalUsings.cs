@@ -14,3 +14,7 @@ global using Microsoft.AspNetCore.Identity.UI.Services;
 global using Microsoft.AspNetCore.WebUtilities;
 global using GamesClub.ViewModels;
 global using Microsoft.AspNetCore.Mvc.Rendering;
+global using Microsoft.AspNetCore.Authorization;
+global using GamesClub.Services;
+global using GamesClub.Attribute;
+global using GamesClub.Settings;

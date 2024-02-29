@@ -95,7 +95,7 @@ namespace GamesClub.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            var userName = new EmailAddressAttribute().IsValid(Input.Email) ? _userManager.FindByEmailAsync(Input.Email).Result.UserName : Input.Email;
+            var userName = (new EmailAddressAttribute().IsValid(Input.Email) && await _userManager.FindByEmailAsync(Input.Email)!=null) ? _userManager.FindByEmailAsync(Input.Email).Result.UserName : Input.Email;
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout

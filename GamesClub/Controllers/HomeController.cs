@@ -3,15 +3,17 @@ namespace GamesClub.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IGamesServices _gamesServices;
+        public HomeController(ILogger<HomeController> logger, IGamesServices gamesServices)
         {
             _logger = logger;
+            _gamesServices = gamesServices;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var games = await _gamesServices.GetAllGames();
+            return View(games);
         }
 
         public IActionResult Privacy()
