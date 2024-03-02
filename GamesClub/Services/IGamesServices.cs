@@ -3,6 +3,9 @@
     public interface IGamesServices
     {
         Task<IEnumerable<Game>> GetAllGames();
-        void Create(CreateFormGamesViewModel model) ;
+        Game? getById(int id);
+        Task<Game?> Update(EditFormGamesViewModel model);
+        void Create(CreateFormGamesViewModel model);
+        bool Delete(int id);
     }
 }
